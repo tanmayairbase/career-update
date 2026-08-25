@@ -14,18 +14,18 @@ It's a plain `SKILL.md`, so any agent or tool that reads that format can run it.
 
 ## Why user-invoked, not automatic
 
-It only loads when you invoke it by name. Career tracking is the kind of thing that's tempting to wire into always-loaded instructions so it "just happens" — but that means paying its context cost on every run, including the ones that have nothing to do with it. Manual invocation means it costs nothing until you actually want it.
+It only loads when you invoke it by name. Career tracking is the kind of thing that's tempting to wire into always-loaded instructions so it "just happens," but that means paying its context cost on every run, including the ones that have nothing to do with it. Manual invocation means it costs nothing until you actually want it.
 
 ## Setup
 
 Expects these files to exist (edit the paths in `SKILL.md` if yours differ):
 
-- `~/.claude/career/2026-h2-goals.md` — your current goals, the primary lens
-- `~/.claude/career/staff-rubric.md`, `principal-rubric.md` — numbered rubric items
-- `~/.claude/career/gaps.md` — standing gaps, checked each run, never auto-merged
-- `~/.claude/career/updates.md` — the evidence log this skill appends to
+- `~/.claude/career/2026-h2-goals.md`, your current goals, the primary lens
+- `~/.claude/career/staff-rubric.md`, `principal-rubric.md`, numbered rubric items
+- `~/.claude/career/gaps.md`, standing gaps, checked each run, never auto-merged
+- `~/.claude/career/updates.md`, the evidence log this skill appends to
 
-None of these ship in this repo. They're personal — write your own.
+None of these ship in this repo. They're personal; write your own.
 
 ## Install
 
