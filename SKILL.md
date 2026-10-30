@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Career Update
 
-User-invoked only, run weekly-ish. Appends one dated section to `~/.claude/career/updates.md` covering work since the last logged date. The career files stay off `CLAUDE.md` on purpose: this skill is their only door, so they cost context only when actually run.
+User-invoked only, run weekly-ish. Appends one dated section to `~/.claude/career/updates.md` covering work since the last logged date.
 
 ## Steps
 
@@ -39,7 +39,12 @@ User-invoked only, run weekly-ish. Appends one dated section to `~/.claude/caree
 
 7. **Reconcile `gaps.md`.** Check whether anything pulled this window closes a standing gap: a second mentee, cross-team architecture work, a tool adopted by another team. If so, name the gap and propose the edit to `gaps.md`; leave it untouched otherwise.
 
-8. **Confirm scope, then append.** If any pull was ambiguous (repo choice, JQL scope, a borderline tag), show the drafted section before writing. Otherwise append a new `## <window-start> to <today>` section to `updates.md` and stop; prior sections are immutable history, not draft material.
+8. **Confirm scope, then append.** If any pull was ambiguous (repo choice, JQL scope, a borderline tag), show the drafted section before writing. Otherwise append a new `## <window-start> to <today>` section to `updates.md`; prior sections are immutable history, not draft material.
+
+9. **Sync the Confluence mirror.** Replace each private page's body with its local file (full content minus the `#` title line), so the pages match exactly. Repeat after any later edit to either file in the same session. Done when every page's latest version matches its file.
+   - `updates.md` → "Career Updates", page `4165042656`
+   - `gaps.md` → "Career Gaps / Watch-outs", page `4165795859`
+   - cloudId `3a4014c4-180a-4b0f-8524-060165699381`
 
 ## Completion bar
 

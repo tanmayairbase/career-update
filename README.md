@@ -27,6 +27,8 @@ Expects these files to exist (edit the paths in `SKILL.md` if yours differ):
 
 None of these ship in this repo. They're personal; write your own.
 
+Step 9 mirrors `updates.md` and `gaps.md` to two private Confluence pages. Replace the page IDs and cloudId in `SKILL.md` with your own pages, or delete the step if you don't want a mirror.
+
 ## Install
 
 Drop this directory wherever your agent looks for skills. For Claude Code:
