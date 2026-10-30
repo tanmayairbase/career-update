@@ -16,26 +16,28 @@ User-invoked only, run weekly-ish. Appends one dated section to `~/.claude/caree
 
 3. **Pull GitHub evidence.**
    ```
-   gh pr list --author "@me" --state merged --search "merged:>=<window-start>" --limit 200 \
-     --json number,title,mergedAt,url,repository \
-     -q '.[] | "\(.mergedAt|split("T")[0]) \(.repository.name)#\(.number) \(.title)"'
+   gh search prs --author "@me" --merged --merged-at ">=<window-start>" --limit 200 \
+     --json repository,number,title,closedAt \
+     -q '.[] | "\(.closedAt|split("T")[0]) \(.repository.name)#\(.number) \(.title)"'
    ```
-   Ask which repos/orgs to cover if more than one is plausible; guessing scope here silently drops evidence.
+   This searches every repo you can see. Ask which repos/orgs to cover only if results span unexpected ones.
+   For PRs about performance, CI, cost, or memory, read the PR body (`gh pr view <n> --json body`) and carry any before/after figures into the bullet with the PR as source; titles alone drop the measured impact.
 
 4. **Pull Jira evidence** (`mcp__plugin_atlassian_atlassian__searchJiraIssuesUsingJql`):
    ```
-   assignee = currentUser() AND updated >= "<window-start>" ORDER BY updated DESC
+   assignee = currentUser() AND resolved >= "<window-start>" ORDER BY resolved DESC
+   assignee = currentUser() AND updated >= "<window-start>" AND statusCategory != Done ORDER BY updated DESC
    ```
-   Mark each issue resolved/closed or merely touched; resolved is the stronger claim.
+   The first query is completed work (the stronger claim); the second is in-progress work. A resolved ticket with no matching merged PR in the window is usually a bulk move or project migration; confirm with the user before citing it.
 
-5. **Pull Confluence evidence** (`mcp__plugin_atlassian_atlassian__searchConfluenceUsingCql`), both queries: they catch different things.
+5. **Pull Confluence evidence** (`mcp__plugin_atlassian_atlassian__searchConfluence`), both queries: they catch different things.
    ```
    creator = currentUser() AND type = page AND created >= "<window-start>"
    contributor = currentUser() AND type = page AND lastmodified >= "<window-start>"
    ```
-   Label results by which query found them: `creator` hits are owned docs (stronger signal); `contributor` hits are edits to someone else's page (weaker).
+   Label results by which query found them: `creator` hits are owned docs (stronger signal); `contributor` hits are edits to someone else's page (weaker), and the match can come from an older edit of yours on a page someone else changed this window; cite one only when the user confirms an edit in the window.
 
-6. **Synthesize by theme**, not by source system. One bullet can combine a PR, its Jira ticket, and a doc it produced. Tag every bullet `[Rubric-Category#N]`. A number in a bullet (PR count, dollar amount, event count) needs an inline source; without one, tag it `[unverified]`.
+6. **Ask for off-system work, then synthesize.** Before drafting, ask the user for work this window that leaves no GitHub/Jira/Confluence trace: hiring and interviews, mentoring and coaching, talks and demos, Slack threads. These often carry the strongest `[Principal-Collaboration#N]` evidence. Ask for a link to any feedback or thanks and quote it verbatim. Then synthesize by theme, not by source system. One bullet can combine a PR, its Jira ticket, and a doc it produced. Tag every bullet `[Rubric-Category#N]`. A number in a bullet (PR count, dollar amount, event count) needs an inline source; without one, tag it `[unverified]`.
 
 7. **Reconcile `gaps.md`.** Check whether anything pulled this window closes a standing gap: a second mentee, cross-team architecture work, a tool adopted by another team. If so, name the gap and propose the edit to `gaps.md`; leave it untouched otherwise.
 
